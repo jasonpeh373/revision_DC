@@ -76,17 +76,8 @@ This document provides a comprehensive, bilingual summary of the key networking 
     *   **Wi-Fi (无线保真):** 一种流行的技术，允许电子设备连接到无线局域网 (WLAN)，主要使用 IEEE 802.11 系列标准。
 *   **IEEE 802.11 Standards Comparison (标准对比):**
     *   **IEEE 802.11 标准:** 无线局域网的一系列规范。主要版本包括：
-| Standard (标准) | Wi-Fi Gen | Frequency (频率) | Max Data Rate (最大速率) | Distance Limitation (距离限制) | Notes (备注) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| 802.11 | Wi-Fi 0 | 2.4 GHz | 2 Mbps | ~20-100 m | Original standard, now obsolete. (原始标准，已过时) |
-| 802.11a | Wi-Fi 2 | 5 GHz | 54 Mbps | ~35 m (室内), ~120 m (室外) | Less interference than 2.4 GHz. (比 2.4 GHz 干扰少) |
-| 802.11b | Wi-Fi 1 | 2.4 GHz | 11 Mbps | ~35 m (室内), ~120 m (室外) | Prone to interference from other devices. (易受其他设备干扰) |
-| 802.11g | Wi-Fi 3 | 2.4 GHz | 54 Mbps | ~38 m (室内), ~140 m (室外) | Backward compatible with 802.11b. (向后兼容 802.11b) |
-| 802.11n | Wi-Fi 4 | 2.4/5 GHz | 600 Mbps | ~70 m (室内), ~250 m (室外) | Uses MIMO (Multiple Input Multiple Output). (使用多输入多输出技术) |
-| 802.11ac | Wi-Fi 5 | 5 GHz | 6.93 Gbps | ~35 m (室内), ~250 m (室外) | Wider channels, more MIMO streams. (更宽的信道，更多的 MIMO 流) |
-| 802.11ax | Wi-Fi 6 | 2.4/5 GHz | >10 Gbps | 类似于 802.11n/ac | OFDMA for efficiency in dense areas. (使用 OFDMA 提高密集区域效率) |
-| **Bluetooth** | N/A | 2.4 GHz | ~24 Mbps (v5.0) | ~10-100 m (取决于类别) | 用于短距离无线连接。 |
-| **IrDA** | N/A | (红外光) | 4 Mbps | ~1 m | 需要视线无阻挡。 |
+![image](https://github.com/user-attachments/assets/025f253d-57be-4d43-86d4-3466a6eb7494)
+
 
 ### WLAN Architecture (WLAN 架构)
 
