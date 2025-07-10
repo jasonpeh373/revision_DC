@@ -1,418 +1,1142 @@
-# Networking Concepts Review Notes (中英复习笔记) - 完整版
-
-This document provides a comprehensive, bilingual summary of the key networking concepts from your course materials, including detailed explanations, formulas, and practice questions.
-本文档根据您提供的课程材料，对关键网络概念进行了全面、中英双语的总结，包含详细解释、计算公式及练习题。
+# Software Engineering Exam Revision Notes (软件工程考试复习笔记)
 
 ---
 
-## 1. Wired LAN: Ethernet (有线局域网：以太网)
+## Topic 1: Software Architecture (软件架构)
 
-*   **Ethernet:** A family of wired computer networking technologies commonly used in local area networks (LAN), metropolitan area networks (MAN), and wide area networks (WAN).
-    *   **以太网 (Ethernet):** 一系列常用于局域网 (LAN)、城域网 (MAN) 和广域网 (WAN) 的有线计算机网络技术。
-*   **IEEE 802.3 Standard:** The set of standards that defines Ethernet. It specifies the physical layer and the medium access control (MAC) sublayer of the data link layer.
-    *   **IEEE 802.3 标准:** 定义以太网的标准集。它规定了数据链路层的物理层和介质访问控制 (MAC) 子层。
-*   **CSMA/CD (Carrier Sense Multiple Access with Collision Detection):** The access method used by early Ethernet to handle simultaneous transmissions. Stations listen before transmitting, and if a collision occurs, they stop, wait a random amount of time, and retransmit. Modern switched Ethernet is full-duplex and does not use CSMA/CD.
-    *   **载波侦听多路访问/碰撞检测 (CSMA/CD):** 早期以太网用于处理同时传输的访问方法。工作站在发送前先侦听信道，如果发生碰撞，则停止发送，随机等待一段时间后重新发送。现代的交换式以太网是全双工的，不再使用 CSMA/CD。
-*   **MAC Address:** A unique 48-bit hardware address assigned to each network interface card (NIC) to identify a device on the network. It is typically represented as 12 hexadecimal digits (e.g., `00:1A:2B:3C:4D:5E`).
-    *   **MAC 地址:** 分配给每个网络接口卡 (NIC) 的唯一 48 位硬件地址，用于在网络上识别设备。通常表示为 12 位十六进制数 (例如 `00:1A:2B:3C:4D:5E`)。
-*   **Ethernet Frame:** The format in which data is transmitted over Ethernet. The structure includes:
-    *   **以太网帧:** 以太网上传输数据的格式，其结构包括：
-        *   **Preamble & SFD:** For synchronization. (前同步码和起始帧分界符：用于同步)
-        *   **Destination & Source MAC Addresses:** 6 bytes each. (目标和源 MAC 地址：各 6 字节)
-        *   **Type/Length:** Indicates the protocol of the payload (e.g., IPv4, IPv6) or the length. (类型/长度：指明负载数据的协议类型或长度)
-        *   **Data Payload:** The actual data being sent (46 to 1500 bytes). (数据负载：实际发送的数据，大小为 46 到 1500 字节)
-        *   **Frame Check Sequence (FCS):** 4-byte CRC for error detection. (帧校验序列：4 字节的 CRC，用于错误检测)
+#### 1. What is software design? (什么是软件设计?)
 
-### Bridge in Wired LAN (有线局域网中的桥接器)
-![image](https://github.com/user-attachments/assets/5db1cdf6-357c-4348-b986-a7dec7337dc8)
+ **As per your correction:**
+ "The process of defining the software architecture, components, modules, interfaces, and data for a software system to satisfy specified requirements."
 
-*   **Bridge (桥接器):** 一种数据链路层设备，用于连接两个或多个局域网段，并根据 MAC 地址转发数据帧。
-    *   **With Bridge (使用桥接器):**
-        *   **Benefits (优点):**
-            *   **Reduces Collision Domains (减少冲突域):** 桥接器将一个大的冲突域分割成多个小的冲突域，从而减少了冲突的发生，提高了网络性能。
-            *   **Filters Traffic (过滤流量):** 桥接器学习连接设备的 MAC 地址，只转发目标 MAC 地址在另一个网段的数据帧，从而减少了不必要的流量。
-            *   **Improves Security (提高安全性):** 通过隔离流量，可以提高每个网段的安全性。
-        *   **How it works (工作原理):** 桥接器维护一个 MAC 地址表，记录每个端口连接的设备 MAC 地址。当收到一个数据帧时，它会查找目标 MAC 地址，如果目标在同一个网段，则丢弃该帧；如果目标在另一个网段，则转发该帧到相应的端口。
-    *   **Without Bridge (不使用桥接器):**
-        *   **Limitations (缺点):**
-            *   **Single Collision Domain (单一冲突域):** 所有设备都在同一个冲突域中，随着设备数量的增加，冲突发生的概率会大大增加，导致网络性能下降。
-            *   **Broadcast Storms (广播风暴):** 广播流量会泛洪到所有设备，可能导致网络拥塞。
-            *   **No Traffic Isolation (无流量隔离):** 所有流量都在同一个网段中传输，无法有效隔离不同部门或用户之间的流量。
+ **中文翻译 (Chinese Translation):**
+ “为了满足指定的需求，而定义软件系统的软件架构、组件、模块、接口和数据的过程。”
 
----
+#### 2. Describe the software design process. (描述软件设计过程)
 
-## 2. Comparison: Wired vs. Wireless LAN (有线与无线局域网对比)
+ **From your notes (Lecture 7 & 8, Slide 9):**
+ * Architectural design - Identify sub-systems
+ * Abstract specification - Specify sub-systems
+ * Interface design - Describe sub-system interfaces
+ * Component design - Decompose sub-systems into components
+ * Data structure design - Design data structures to solve data problem
+ * Algorithm design - Design algorithms to solve functionalities problems
 
-### Wired LAN (Ethernet) - Benefits & Limitations (有线局域网的优缺点)
+ **中文翻译 (Chinese Translation):**
+ * 架构设计: 识别子系统。
+ * 抽象规格说明: 为子系统制定规格。
+ * 接口设计: 描述子系统的接口。
+ * 组件设计: 将子系统分解为组件。
+ * 数据结构设计: 设计用于解决数据问题的数据结构。
+ * 算法设计: 设计用于解决功能问题的算法。
 
-*   **Benefits (优点):**
-    *   **Speed & Bandwidth (速度与带宽):** Generally offers higher speeds (up to 10 Gbps and beyond) and more consistent bandwidth than wireless networks. (通常提供比无线网络更高的速度（高达 10 Gbps 或更高）和更稳定的带宽。)
-    *   **Reliability & Stability (可靠性与稳定性):** Immune to radio frequency interference. Provides a stable connection with lower latency, which is crucial for gaming or real-time applications. (不受射频干扰影响。提供延迟更低的稳定连接，对游戏或实时应用至关重要。)
-    *   **Security (安全性):** Inherently more secure as it requires physical access to a network port. Data is not broadcast through the air. (本质上更安全，因为它需要对网络端口的物理访问。数据不会在空中广播。)
+#### 3. What is software architecture? (什么是软件架构?)
 
-*   **Limitations (缺点):**
-    *   **Mobility (移动性):** Devices are physically tethered by a cable, offering no mobility. (设备被网线物理束缚，没有移动性。)
-    *   **Installation (安装):** Can be difficult and costly to install, especially in older buildings or across long distances. (安装可能困难且昂贵，尤其是在旧建筑或长距离布线时。)
-    *   **Clutter (杂乱):** Cables can be messy and create clutter. (线缆可能会很凌乱。)
+ **As per your correction:**
+ "The architecture of a system is a comprehensive framework that describes its form and structure - its components and how they fit together."
 
-### Wireless LAN (WLAN) - Benefits & Limitations (无线局域网的优缺点)
+ **中文翻译 (Chinese Translation):**
+ “一个系统的架构是一个全面的框架，它描述了系统的形式和结构——即它的组件以及它们如何组合在一起。”
 
-*   **Benefits (优点):**
-    *   **Convenience & Mobility (便利性与移动性):** Allows users to connect to the network and move around freely within the coverage area. (允许用户连接到网络并在覆盖区域内自由移动。)
-    *   **Easy Deployment & Scalability (易于部署和扩展):** Easy to set up where cables cannot be run. Adding new users is simple and does not require new wiring. (在无法布线的地方很容易设置。添加新用户很简单，不需要新的布线。)
-    *   **Cost (成本):** Initial setup for a small area can be cheaper as it avoids the cost of extensive cabling. (小范围的初始设置成本可能更低，因为它避免了大量的布线成本。)
+#### 4. Describe the architectural model. (描述架构模型)
 
-*   **Limitations (缺点):**
-    *   **Security (安全性):** Wireless signals are broadcast and can be intercepted more easily. Requires strong encryption (like WPA3) to be secure. (无线信号是广播的，更容易被拦截。需要强大的加密（如 WPA3）来确保安全。)
-    *   **Range (范围):** The signal has a limited range and can be weakened or blocked by walls, floors, and other physical obstructions. (信号范围有限，并且可能被墙壁、地板和其他物理障碍物削弱或阻挡。)
-    *   **Reliability & Interference (可靠性与干扰):** Performance can be affected by interference from other Wi-Fi networks, Bluetooth devices, microwave ovens, and other electronics. (性能可能受到来自其他 Wi-Fi 网络、蓝牙设备、微波炉和其他电子设备的干扰影响。)
-    *   **Speed (速度):** Typically slower than a wired connection, and the speed can fluctuate depending on signal strength and network congestion. (通常比有线连接慢，并且速度会根据信号强度和网络拥塞情况而波动。)
+ **From your notes (Lecture 7 & 8, Slide 18):**
+ The architectural model consists of:
+ *   **Structural Model**
+     *   Repository Model
+     *   Client Server Model
+     *   Abstract Machine (Layered) Model
+ *   **Control Model**
+     *   Centralized Model
+     *   Event-Driven Model
+ *   **Decomposition Model**
+     *   Object Model
+     *   Pipelining Model
 
----
+ **中文翻译 (Chinese Translation):**
+ 架构模型包含：
+ *   **结构模型**
+     *   仓库模型
+     *   客户端-服务器模型
+     *   抽象机 (分层) 模型
+ *   **控制模型**
+     *   集中式模型
+     *   事件驱动模型
+ *   **分解模型**
+     *   对象模型
+     *   管道模型
 
-## 3. Wireless LAN (WLAN) Details (无线局域网详解)
+#### 5. Describe the structural model (Architectural Styles) and list the advantages and disadvantages of each model. (描述结构模型 (架构风格) 并列出优缺点)
 
-*   **Wi-Fi (Wireless Fidelity):** A popular technology that allows electronic devices to connect to a WLAN, mainly using the IEEE 802.11 standards.
-    *   **Wi-Fi (无线保真):** 一种流行的技术，允许电子设备连接到无线局域网 (WLAN)，主要使用 IEEE 802.11 系列标准。
-*   **IEEE 802.11 Standards Comparison (标准对比):**
-    *   **IEEE 802.11 标准:** 无线局域网的一系列规范。主要版本包括：
-![image](https://github.com/user-attachments/assets/025f253d-57be-4d43-86d4-3466a6eb7494)
+ **From your notes (Lecture 7 & 8, Slide 18):**
+ The "Structural Model" section on this slide lists three main types. We will detail each one based on the subsequent slides in your notes.
 
+ **中文翻译 (Chinese Translation):**
+ 此幻灯片上的“结构模型”部分列出了三种主要类型。我们将根据你笔记中后续的幻灯片来详细说明每一种。
 
-### WLAN Architecture (WLAN 架构)
+**a) Repository Model (仓库模型)**
 
-*   **Station (STA):** Any device with a wireless network interface (e.g., laptop, smartphone).
-    *   **工作站 (STA):** 任何带有无线网络接口的设备 (例如，笔记本电脑、智能手机)。
-*   **Access Point (AP):** A device that creates a wireless local area network. It acts as a bridge between the wireless and wired networks.
-    *   **接入点 (AP):** 创建无线局域网的设备。它充当无线和有线网络之间的桥梁。
-*   **BSS (Basic Service Set):** A group of stations that can communicate with each other. The coverage area of an AP is a BSS.
-    *   **基本服务集 (BSS):** 一组可以相互通信的工作站。一个 AP 的覆盖范围就是一个 BSS。
-        *   **Independent BSS (IBSS) / Ad-hoc Mode:** An ad-hoc network where stations communicate directly without an AP.
-        *   **独立 BSS (IBSS) / Ad-hoc 模式:** 一个没有 AP 的自组织网络，工作站之间直接通信。
-        *   **Infrastructure BSS:** Stations communicate via an AP.
-        *   **基础架构 BSS:** 工作站通过一个 AP 进行通信。
-*   **ESS (Extended Service Set):** A set of two or more connected BSSs that appear as a single logical network to the user, allowing for roaming. The BSSs are connected by a Distribution System (DS).
-    *   **扩展服务集 (ESS):** 两个或多个相连的 BSS 组成的集合，对用户来说如同一个单一的逻辑网络，允许漫游。这些 BSS 通过一个分布式系统 (DS) 连接。
-*   **SSID (Service Set Identifier):** The name of a WLAN. You see this name when you search for Wi-Fi networks.
-    *   **服务集标识符 (SSID):** WLAN 的网络名称。您在搜索 Wi-Fi 网络时看到的就是这个名字。
+ **From your notes (Slide 19, 21):**
+ *   **Description:** "Shared data is held in a central database or repository and may be accessed by all sub-systems." It is used when sub-systems must exchange large amounts of data.
+ *   **Advantages:**
+     *   "Efficient way to share large amounts of data."
+     *   "Sub-systems need not be concerned with how data is produced."
+     *   "Centralised management e.g. backup, security, etc."
+ *   **Disadvantages:**
+     *   "Sub-systems must agree on a repository data model. Inevitably a compromise."
+     *   "Data evolution is difficult and expensive."
+     *   "Difficult to distribute efficiently."
 
-### WLAN Security (WLAN 安全)
+ **中文翻译 (Chinese Translation):**
+ *   **描述:** “共享数据保存在中央数据库或仓库中，所有子系统都可以访问。” 当子系统间必须交换大量数据时使用。
+ *   **优点:**
+     *   “共享大量数据的高效方式。”
+     *   “子系统无需关心数据是如何生产的。”
+     *   “集中式管理，例如备份、安全等。”
+ *   **缺点:**
+     *   “子系统必须就仓库数据模型达成一致。这不可避免地是一种妥协。”
+     *   “数据演变困难且昂贵。”
+     *   “难以高效地进行分发。”
 
-*   **WEP (Wired Equivalent Privacy):** An old, insecure security protocol. **Do not use.**
-    *   **有线等效保密 (WEP):** 一种过时且不安全的加密协议。**不要使用。**
-*   **WPA/WPA2/WPA3 (Wi-Fi Protected Access):** Modern, secure standards for protecting wireless networks. WPA3 is the latest and most secure, offering stronger encryption and authentication.
-    *   **Wi-Fi 保护访问 (WPA/WPA2/WPA3):** 用于保护无线网络的现代安全标准。WPA3 是最新、最安全的标准，提供更强的加密和身份验证。
+**b) Client-Server Model (客户端-服务器模型)**
 
----
+ **From your notes (Slide 22, 24):**
+ *   **Description:** "Distributed system model which shows how data and processing is distributed across a range of components. Set of stand-alone servers which provide specific services."
+ *   **Advantages:**
+     *   "Distribution of data is straightforward."
+     *   "Makes effective use of networked systems."
+     *   "Easy to add new servers or upgrade existing servers."
+ *   **Disadvantages:**
+     *   "No shared data model so sub-systems use different data organisation. Data interchange may be inefficient."
+     *   "Redundant management in each server."
+     *   "No central register of names and services - it may be hard to find out what servers and services are available."
 
-## 4. IPv6 (互联网协议第 6 版)
+ **中文翻译 (Chinese Translation):**
+ *   **描述:** “一种分布式系统模型，展示了数据和处理如何在一系列组件中分布。由一组提供特定服务的独立服务器构成。”
+ *   **优点:**
+     *   “数据分发是直接了当的。”
+     *   “有效利用网络化系统。”
+     *   “易于添加新服务器或升级现有服务器。”
+ *   **缺点:**
+     *   “没有共享的数据模型，因此子系统使用不同的数据组织。数据交换可能效率低下。”
+     *   “每个服务器中都有冗余的管理。”
+     *   “没有名称和服务的中央注册表——因此可能很难发现有哪些可用的服务器和服务。”
 
-*   **Reason for IPv6:** The massive growth of the internet led to the exhaustion of the IPv4 address space (only ~4.3 billion addresses).
-    *   **IPv6 的原因:** 互联网的迅猛发展导致 IPv4 地址空间（仅约 43 亿个地址）耗尽。
-*   **Key Features:**
-    *   **主要特性:**
-        *   **Larger Address Space:** 128-bit addresses (2¹²⁸, a virtually inexhaustible number).
-        *   **更大的地址空间:** 128 位地址 (2¹²⁸，一个几乎用不完的数字)。
-        *   **Simplified Header:** Faster processing by routers because fields like checksum and options are removed or handled differently.
-        *   **简化的报头:** 路由器处理速度更快，因为校验和、选项等字段被移除或以不同方式处理。
-        *   **Integrated Security:** IPSec is a mandatory part of the protocol, providing end-to-end security.
-        *   **集成的安全性:** IPSec 是协议的强制组成部分，提供端到端安全。
-        *   **No NAT (Network Address Translation):** End-to-end connectivity is possible at the IP layer, simplifying protocols and applications.
-        *   **无网络地址转换 (NAT):** IP 层可以实现端到端连接，简化了协议和应用。
-*   **Address Format & Abbreviation:**
-    *   **地址格式与缩写:**
-        *   **Format:** Eight groups of four hexadecimal digits, separated by colons (e.g., `2001:0db8:85a3:0000:0000:8a2e:0370:7334`).
-        *   **格式:** 八组四位十六进制数，以冒号分隔。
-        *   **Rule 1: Leading Zeros:** Leading zeros in any group can be omitted (e.g., `0db8` becomes `db8`).
-        *   **规则 1: 省略前导零:** 每组中的前导零可以省略。
-        *   **Rule 2: Consecutive Zeros:** One sequence of consecutive all-zero groups can be replaced by a double colon `::` (e.g., `2001:0db8:85a3::8a2e:0370:7334`). This can only be done once in an address.
-        *   **规则 2: 省略连续的零:** 一串连续的全零组可以用双冒号 `::` 代替。这个规则在每个地址中只能使用一次。
+**c) Abstract Machine (Layered) Model (抽象机/分层模型)**
 
-### IPv6 Address Types (IPv6 地址类型)
+> **From your notes (Slide 25):**
+> *   **Description:** "Organises the system into a set of layers (or abstract machines) each of which provide a set of services."
+> *   **Advantages (inferred from description):**
+>     *   "Supports the incremental development of sub-systems in different layers."
+>     *   "When a layer interface changes, only the adjacent layer is affected." (This implies good maintainability).
+> *   **Disadvantages:**
+>     *   "However, often artificial to structure systems in this way."
+>
+> **中文翻译 (Chinese Translation):**
+> *   **描述:** “将系统组织成一组层次（或抽象机），每个层次都提供一组服务。”
+> *   **优点 (从描述中推断):**
+>     *   “支持在不同层次中增量式地开发子系统。”
+>     *   “当一个层的接口改变时，只有相邻的层会受到影响。” (这意味着良好的可维护性)。
+> *   **缺点:**
+>     *   “然而，用这种方式来构建系统通常会显得不自然。”
 
-*   **Unicast:** An address for a single interface. A packet sent to a unicast address is delivered to the interface identified by that address. (one-to-one)
-    *   **单播:** 单个接口的地址。发送到单播地址的数据包将被递送到该地址标识的接口。(一对一)
-*   **Multicast:** An address for a set of interfaces (typically belonging to different nodes). A packet sent to a multicast address is delivered to all interfaces in the set. (one-to-many)
-    *   **多播:** 一组接口（通常属于不同节点）的地址。发送到多播地址的数据包将被递送到该组中的所有接口。(一对多)
-*   **Anycast:** An address for a set of interfaces, but a packet sent to an anycast address is delivered to just one of the interfaces in the set (the "nearest" one, according to the routing protocol's measure of distance). (one-to-one-of-many)
-    *   **任播 (Anycast):** 一组接口的地址，但发送到任播地址的数据包只会被递送到该组中的一个接口（根据路由协议的距离度量，通常是“最近”的那个）。(多选一)
+#### 6. Describe the control model. (描述控制模型)
 
-*   **Transition Mechanisms:**
-    *   **过渡机制:**
-        *   **Dual Stack:** Devices run both IPv4 and IPv6 simultaneously.
-        *   **双栈:** 设备同时运行 IPv4 和 IPv6。
-        *   **Tunneling (6to4, Teredo):** Encapsulating IPv6 packets within IPv4 packets to traverse an IPv4-only network.
-        *   **隧道技术 (6to4, Teredo):** 将 IPv6 数据包封装在 IPv4 数据包中，以穿越仅支持 IPv4 的网络。
-
----
-
-## 5. IPv4 Subnetting (IPv4 子网划分)
-
-*   **VLSM (Variable Length Subnet Masking - 可变长子网掩码):** 一种 IP 地址分配策略，允许在同一个网络中使用不同长度的子网掩码，从而更有效地利用 IP 地址空间，减少浪费。
-    *   **优点:** 提高 IP 地址利用率，减少地址浪费；支持更灵活的网络设计。
-    *   **缺点:** 路由表可能更复杂；故障排除可能更困难。
-
-### Key Concepts (关键概念)
-
-*   **Network Address (网络地址):** 子网的第一个地址，用于标识整个子网。主机位全为 0。
-*   **Broadcast Address (广播地址):** 子网的最后一个地址，用于向子网中的所有设备发送数据。主机位全为 1。
-*   **Subnet Mask (子网掩码):** 用于区分 IP 地址中的网络部分和主机部分。网络位为 1，主机位为 0。
-*   **Usable Host Address Range (可用主机地址范围):** 网络地址和广播地址之间的所有地址，可以分配给网络中的设备。
-*   **Wasted IP Addresses (浪费的 IP 地址):** 每个子网中，网络地址和广播地址是不可用的，因此它们是“浪费”的。VLSM 的目标是最小化这种浪费。
-
-### VLSM Calculation Steps (VLSM 计算步骤)
-
-1.  **Identify Requirements (识别需求):** 列出所有子网所需的主机数量，并按降序排列（从大到小）。
-2.  **Determine Subnet Mask (确定子网掩码):** 对于每个子网，根据所需主机数量计算出最小的子网掩码。公式为 `2^h - 2 >= N`，其中 `h` 是主机位数，`N` 是所需主机数量。
-3.  **Allocate Addresses (分配地址):** 从可用的 IP 地址块中，为每个子网分配网络地址、广播地址和可用主机范围。始终从最大的子网开始分配，以确保有足够的连续地址空间。
+> **From your notes (Slide 18, 27, 28):**
+> The "Control Model" is concerned with the control flow between sub-systems. There are two main styles:
+> 1.  **Centralised Control:** "One sub-system has overall responsibility for control and starts and stops other sub-systems." This can be further divided into:
+>     *   **Call-return model:** "Top-down subroutine model where control starts at the top of a subroutine hierarchy and moves downwards."
+>     *   **Manager model:** "One system component controls the stopping, starting and coordination of other system processes."
+> 2.  **Event-Based Control:** "Each sub-system can respond to externally generated events from other sub-systems or the system's environment."
+>
+> **中文翻译 (Chinese Translation):**
+> “控制模型”关注子系统之间的控制流。主要有两种风格：
+> 1.  **集中式控制:** “一个子系统全面负责控制，并启动和停止其他子系统。” 这可以进一步分为：
+>     *   **调用-返回模型:** “自上而下的子程序模型，其中控制从子程序层次结构的顶部开始并向下移动。”
+>     *   **管理者模型:** “一个系统组件控制其他系统进程的停止、启动和协调。”
+> 2.  **基于事件的控制:** “每个子系统都可以响应来自其他子系统或系统环境的外部生成事件。”
 
 ---
 
-## 6. Error Control & Flow Control (差错控制与流量控制)
+## Topic 2: Software Testing (软件测试) - SKIPPED
+### 1. What is V&V? (什么是 V&V？)
+*   **V&V** stands for **Verification and Validation**.
+    *   **中文解释:** V&V 指的是 **验证 (Verification)** 和 **确认 (Validation)**。
+*   It is a system engineering discipline to assess the correctness and quality of software throughout its life cycle.
+    *   **中文解释:** 它是一个系统工程的准则，用来在整个软件生命周期中，评估和检测软件的正确性与质量。
+*   **Verification:** "Are we building the product right?". It ensures the software conforms to its specifications.
+    *   **中文解释 (验证):** 关注的是 **“我们是否在正确地构建产品？”**。它确保软件符合其设计规格和标准。
+*   **Validation:** "Are we building the right product?". It ensures the software meets the user's real needs.
+    *   **中文解释 (确认):** 关注的是 **“我们是否在构建正确的产品？”**。它确保软件满足用户的真实需求。
+*(参考幻灯片第3、4页)*
 
-### Error Detection (差错检测)
+### 2. How to perform V&V? (如何执行 V&V？)
+V&V is performed through two complementary activities:
+*   **Software Inspection (Static Analysis):**
+    *   This is a **static** method that does not require program execution. It analyzes static representations (documents, code) to find problems.
+    *   **中文解释 (软件审查/静态分析):** 这是一种 **静态** 的方法，不需要运行程序。它通过分析和检查系统的静态表示（如文档、图表、源代码）来发现问题。
+*   **Software Testing (Dynamic Analysis):**
+    *   This is a **dynamic** method that requires program execution. It observes the software's behavior with test data to find defects.
+    *   **中文解释 (软件测试/动态分析):** 这是一种 **动态** 的方法，需要实际运行程序。它通过执行软件，输入测试数据，并观察其行为来发现缺陷。
+*(参考幻灯片第7页)*
 
-*   **Purpose (目的):** To detect errors that may occur during data transmission. (检测数据传输过程中可能发生的错误。)
+### 3. Describe about software inspection and its processes. (描述软件审查及其过程)
+*   **Software Inspection** is a formal technique to find errors, omissions, and anomalies in any system representation without executing it.
+    *   **中文解释 (软件审查):** 是一种正式的技术，旨在发现系统任何表示形式（文档、模型、代码等）中的错误、遗漏和异常，并且 **不需要执行系统**。
+*   **The Inspection Process** includes several stages:
+    1.  **Planning:** Prepare materials and team.
+    2.  **Overview:** Introduce the background and goals to the team.
+    3.  **Individual Preparation:** Team members review materials independently.
+    4.  **Inspection Meeting:** The team discusses and records findings.
+    5.  **Rework:** The author fixes the identified defects.
+    6.  **Follow-up:** Verify that all defects have been corrected.
+    *   **中文解释 (审查过程):** 1. **计划** -> 2. **概述** -> 3. **个人准备** -> 4. **审查会议** -> 5. **返工** -> 6. **跟进**。
+*(参考幻灯片第8、11页)*
 
-    *   **2D Parity Check (二维奇偶校验):**
-        *   **Description (描述):** Data is arranged in a table (rows and columns). Parity bits are calculated for each row and each column. A single bit error will result in parity errors in both its row and column, allowing for error detection and localization. (数据以表格形式（行和列）排列。为每行和每列计算奇偶校验位。单个比特错误将导致其行和列都出现奇偶校验错误，从而实现错误检测和定位。)
-        *   **Example (示例):**
-            ```
-            Data: 1010 0110
-            Row 1: 1 0 1 0 | 0 (even parity)
-            Row 2: 0 1 1 0 | 0 (even parity)
-            -----------------
-            Col P: 1 1 0 0
-            ```
-            If `1010` becomes `1000`, row 1 parity changes, and column 3 parity changes.
+### 4. How to perform inspection? (如何执行审查？)
+1.  Present a system overview to the team.
+2.  Distribute code and documents in advance.
+3.  Conduct the inspection meeting and note all discovered errors.
+4.  Make modifications to repair the errors.
+5.  Re-inspection may be required to verify the fixes.
+    *   **中文解释:** 1. **介绍概览** -> 2. **分发文档** -> 3. **开会审查** -> 4. **修复错误** -> 5. **必要时再审查**。
+*(参考幻灯片第12页)*
 
-    *   **Cyclic Redundancy Check (CRC) (循环冗余校验):**
-        *   **Description (描述):** A powerful error-detection method. A sequence of redundant bits (CRC remainder) is appended to the end of a data block. This remainder is calculated by dividing the data polynomial by a predetermined generator polynomial using modulo-2 arithmetic. The receiver performs the same calculation; if the remainder is zero, no error is detected. (一种强大的差错检测方法。将一串冗余位（CRC 余数）附加到数据块的末尾。该余数是通过使用模 2 算术将数据多项式除以预定的生成多项式来计算的。接收方执行相同的计算；如果余数为零，则未检测到错误。)
-        *   **Process (过程):**
-            1.  **Sender (发送方):**
-                *   Appends `n` zeros to the data (where `n` is the degree of the generator polynomial).
-                *   Divides the augmented data by the generator polynomial using modulo-2 division.
-                *   The remainder is the CRC. Replaces the appended zeros with this CRC.
-            2.  **Receiver (接收方):**
-                *   Divides the received data (including CRC) by the same generator polynomial.
-                *   If the remainder is zero, the data is considered error-free.
+### 5. What is software testing? (什么是软件测试？)
+*   It is the process of **analyzing** a software item to **detect** the differences between existing and required conditions (i.e., bugs) and to **evaluate** the features of the software.
+    *   **中文解释:** 软件测试是一个 **分析** 软件项的过程，目的是 **发现** 现有状况和需求状况之间的 **差异**（即缺陷/Bugs），并 **评估** 该软件项的功能特性。
+*(参考幻灯片第23页)*
 
-### Flow Control (流量控制)
+### 6. Describe about black-box testing. (描述黑盒测试)
+*   **Black-box testing** (or closed box testing) focuses on the **functionality** of the test object, without looking at its internal structure or code.
+    *   **中文解释 (黑盒测试):** 也叫封闭盒测试，是一种关注于测试对象 **功能性** 的测试方法。测试人员不关心软件内部的结构和代码，只关心输入什么，系统是否能产生正确的输出。
+*(参考幻灯片第24页)*
 
-*   **Purpose (目的):** To ensure that the sender does not overwhelm the receiver with data. (确保发送方不会用数据压垮接收方。)
+### 7. List the six basic types of testing. (列出六种基本的测试类型)
+1.  **Unit** (单元测试)
+2.  **Integration** (集成测试)
+3.  **Function/System** (功能/系统测试)
+4.  **Acceptance** (验收测试)
+5.  **Regression** (回归测试)
+6.  **Beta** (Beta测试)
+*(参考幻灯片第25页)*
 
-    *   **Stop-and-Wait ARQ (停止等待 ARQ):**
-        *   **Description (描述):** The sender sends one frame and then waits for an acknowledgment (ACK) from the receiver before sending the next frame. If a frame or ACK is lost, a timeout mechanism triggers retransmission. (发送方发送一帧，然后等待接收方的确认 (ACK) 后再发送下一帧。如果帧或 ACK 丢失，超时机制会触发重传。)
-        *   **Similarity to Go-Back-N/Selective Repeat (与回退 N/选择性重传的相似点):** All are ARQ protocols that use acknowledgments and timeouts for reliability.
-        *   **Difference (不同点):** Only one frame is in transit at a time, leading to low efficiency, especially over long distances or high-latency links. (一次只有一个帧在传输中，导致效率低下，尤其是在长距离或高延迟链路上。)
+### 8. Describe about component and system testing. (描述组件测试和系统测试)
+*   **Component Testing (Unit Testing):**
+    *   Tests individual program components. Usually done by the developer. Tests are based on the developer's experience.
+    *   **中文解释 (组件测试/单元测试):** 测试独立、单个的程序组件。通常由开发该组件的程序员负责，测试用例主要基于开发者的经验来设计。
+*   **System Testing:**
+    *   Tests groups of components integrated into a system or sub-system. Usually done by an independent test team. Tests are based on the system specification.
+    *   **中文解释 (系统测试):** 测试集成了多个组件后形成的系统或子系统。通常由一个独立的测试团队负责，测试用例主要基于系统的需求规格说明书来设计。
+*(参考幻灯片第39页)*
 
-    *   **Go-Back-N ARQ (回退 N ARQ):**
-        *   **Description (描述):** The sender can send multiple frames (up to a window size N) without waiting for an ACK. If an error occurs (e.g., a frame is lost or corrupted), the receiver discards all subsequent frames and sends a negative acknowledgment (NAK) or a cumulative ACK for the last correctly received frame. The sender then retransmits the lost frame and all subsequent frames that were sent after it. (发送方可以发送多个帧（最多一个窗口大小 N），而无需等待 ACK。如果发生错误（例如，帧丢失或损坏），接收方会丢弃所有后续帧，并发送一个否定确认 (NAK) 或对最后正确接收的帧的累积 ACK。然后发送方重新传输丢失的帧以及之后发送的所有后续帧。)
-        *   **Similarity to Stop-and-Wait (与停止等待的相似点):** Uses acknowledgments and timeouts. (使用确认和超时。)
-        *   **Difference (不同点):** Allows multiple frames in flight, improving efficiency. However, it retransmits potentially many frames even if only one was lost. (允许多个帧在传输中，提高了效率。但是，即使只丢失了一个帧，它也会重新传输许多帧。)
+### 9. What is a test case? (什么是测试用例？)
+*   A Test Case consists of:
+    1.  A set of **inputs**
+    2.  Execution **preconditions**
+    3.  Expected **outcomes**
+*   **中文解释:** 一个测试用例包含三个主要部分：1. **一组输入** -> 2. **执行前置条件** -> 3. **预期的输出结果**。
+*(参考幻灯片第40页)*
 
-    *   **Selective Repeat ARQ (选择性重传 ARQ):**
-        *   **Description (描述):** Both sender and receiver maintain a window. The sender can send multiple frames. If a frame is lost, the receiver only requests retransmission of the specific lost frame. The receiver buffers out-of-order frames and delivers them to the network layer only after all missing frames are received and reordered. (发送方和接收方都维护一个窗口。发送方可以发送多个帧。如果帧丢失，接收方只请求重新传输特定的丢失帧。接收方缓冲乱序帧，并且只有在所有丢失的帧都接收并重新排序后才将其交付给网络层。)
-        *   **Similarity to Go-Back-N (与回退 N 的相似点):** Allows multiple frames in flight. (允许多个帧在传输中。)
-        *   **Difference (不同点):** More efficient than Go-Back-N as it only retransmits the lost or corrupted frames, reducing redundant transmissions. Requires more complex buffering at the receiver. (比回退 N 更高效，因为它只重新传输丢失或损坏的帧，减少了冗余传输。接收方需要更复杂的缓冲。)
+### 10. Describe about software testing process. (描述软件测试过程)
+1.  **Design test cases:** Define inputs and expected outputs.
+2.  **Prepare test data:** Create the specific inputs for the test.
+3.  **Run program with test data:** Execute the software.
+4.  **Compare results to test cases:** Check if the actual output matches the expected output.
+    *   **中文解释:** 1. **设计测试用例** -> 2. **准备测试数据** -> 3. **运行程序** -> 4. **比较结果**。
+*(参考幻灯片第41页)*
+
+### 11. Describe about the two types of test cases? (描述两种类型的测试用例)
+1.  **Positive test case:**
+    *   Designed to verify that the program works as expected with **valid inputs**.
+    *   **中文解释 (正向测试用例):** 使用 **有效的** 输入来验证程序能够 **成功** 运行的场景。
+2.  **Negative test case:**
+    *   Designed to verify that the program handles **invalid inputs** gracefully (e.g., shows an error). It tests the program's **robustness**.
+    *   **中文解释 (负向测试用例):** 使用 **无效的** 输入来验证程序能够妥善处理错误，用以测试程序的 **健壮性**。
+*(参考幻灯片第42页)*
+
+### 12. List the four methods to identify test Case. (列出四种识别测试用例的方法)
+1.  **Boundary Value Analysis** (边界值分析)
+2.  **Equivalence Partitioning** (等价类划分)
+3.  **Logic Coverage** (逻辑覆盖)
+4.  **Random Generation** (随机生成)
+*(参考幻灯片第43页)*
+
+### 13. Describe about boundary value analysis. (描述边界值分析)
+*   **Boundary Value Analysis (BVA)** is a testing technique that focuses on the **boundaries** (or limits) of an input range, as this is where errors most often occur.
+    *   **中文解释 (边界值分析):** 是一种专注于测试输入值 **边界** 的技术，因为大多数错误都发生在边界上。
+*   Test cases are designed for values that are on, just above, and just below the boundary. For a range of [0, 100], BVA would test values like -1, 0, 1 and 99, 100, 101.
+    *   **中文解释 (举例):** 如果一个有效范围是 [0, 100]，BVA会选择像 -1, 0, 1 和 99, 100, 101 这样的值来测试。
+*(参考幻灯片第44、45页)*
+
+### 14. System testing contain functional and performance testing. Describe both of the testing. (系统测试包含功能测试和性能测试，描述这两种测试)
+*   **Functional Testing:**
+    *   Tests the implementation of business needs. It checks if the system does what it is supposed to do according to the requirements.
+    *   **中文解释 (功能测试):** 验证系统是否正确地 **实现了业务需求**，即检查系统是否“做对了事”。
+*   **Performance Testing:**
+    *   Tests non-functional requirements like speed, load, etc.
+    *   **中文解释 (性能测试):** 测试系统的 **非功能性需求**，例如速度、负载等。
+    *   It includes:
+        *   **Load Testing:** Testing with many users at the same time. (负载测试)
+        *   **Stress Testing:** Finding the maximum number of users before the system breaks. (压力测试)
+        *   **Endurance Testing:** Testing for a long time for reliability. (耐力测试)
+        *   **Spike Testing:** Testing sudden stress on the system. (尖峰测试)
+---
+
+## Topic 3: Configuration Management (配置管理)
+
+#### 0. What is the Configuration Management Process? (什么是配置管理过程?)
+*(This question was added based on your request to focus on the "process".)*
+
+ **From your notes (Lecture 12, Slide 5 & 13):**
+ The configuration management process involves four main activities:
+ *   **Version management:** Keeping track of the multiple versions of system components and ensuring that changes made to components by different developers do not interfere with each other.
+ *   **System building:** The process of assembling program components, data and libraries, then compiling and linking these to create an executable system.
+ *   **Change management:** Keeping track of requests for changes to the software from customers and developers, working out the costs and impact of making these changes, and deciding if and when the changes should be implemented.
+ *   **Release management:** Preparing software for external release and keeping track of the system versions that have been released for customer use.
+
+ **中文翻译 (Chinese Translation):**
+ 配置管理过程涉及四个主要活动：
+ *   **版本管理:** 跟踪系统组件的多个版本，并确保不同开发人员对组件所做的更改不会相互干扰。
+ *   **系统构建:** 组装程序组件、数据和库，然后编译和链接它们以创建可执行系统的过程。
+ *   **变更管理:** 跟踪来自客户和开发人员的软件变更请求，计算进行这些变更的成本和影响，并决定是否以及何时实施这些变更。
+ *   **发布管理:** 准备要对外发布的软件，并跟踪已发布给客户使用的系统版本。
 
 ---
 
-## 7. Digital Signal Encoding & Synchronization (数字信号编码与同步)
+#### 1. What is configuration management? (什么是配置管理?)
 
-### Digital Encoding Schemes (数字编码方案)
+ **From your notes (Lecture 12, Slide 4):**
+ "General process of managing a changing software system. The aim of CM is to support the system integration process so that all developers can access the project code and documents in a coherent way, and find out what changes have been made."
 
-*   **Purpose (目的):** To convert digital data into digital signals for transmission over a medium. (将数字数据转换为数字信号，以便通过介质传输。)
-*   **Key Concepts (关键概念):**
-    *   **Signal Level (信号电平):** The voltage or power level used to represent bits. (用于表示比特的电压或功率电平。)
-    *   **Bit Rate (比特率):** The number of bits transmitted per second (bps). (每秒传输的比特数。)
-    *   **Baud Rate (波特率):** The number of signal elements (changes in signal level) per second. (每秒信号元素（信号电平变化）的数量。)
-    *   **Synchronization (同步):** Ensuring the receiver's clock is aligned with the sender's clock to correctly interpret bits. (确保接收方的时钟与发送方的时钟对齐，以正确解释比特。)
-
-*   **Common Encoding Schemes (常见编码方案):**
-
-    *   **NRZ-L (Non-Return-to-Zero, Level) (不归零电平码):**
-        *   **Description (描述):** A positive voltage represents 0, and a negative voltage represents 1 (or vice versa). The signal level does not return to zero between bits. (正电压表示 0，负电压表示 1（反之亦然）。信号电平在比特之间不返回零。)
-        *   **Pros (优点):** Simple to implement, efficient use of bandwidth. (实现简单，带宽利用率高。)
-        *   **Cons (缺点):** No self-synchronization (long sequences of 0s or 1s can cause clock drift), DC component (cannot pass through transformers). (无自同步能力（长串的 0 或 1 会导致时钟漂移），存在直流分量（无法通过变压器）。)
-
-    *   **NRZ-I (Non-Return-to-Zero, Invert on Ones) (不归零反向码):**
-        *   **Description (描述):** A 1 is represented by an inversion (change) in the signal level, and a 0 is represented by no change. (1 由信号电平的反转（变化）表示，0 由无变化表示。)
-        *   **Pros (优点):** Better self-synchronization than NRZ-L (for 1s), less prone to errors from polarity reversal. (比 NRZ-L 具有更好的自同步能力（对于 1），不易受极性反转错误的影响。)
-        *   **Cons (缺点):** Still has a DC component, long sequences of 0s can still cause synchronization issues. (仍然存在直流分量，长串的 0 仍然会导致同步问题。)
-
-    *   **RZ (Return-to-Zero) (归零码):**
-        *   **Description (描述):** A 1 is represented by a positive pulse that returns to zero in the middle of the bit interval. A 0 is represented by a negative pulse that returns to zero in the middle of the bit interval (or a zero voltage for 0). (1 由在比特间隔中间返回零的正脉冲表示。0 由在比特间隔中间返回零的负脉冲表示（或 0 电压表示 0）。)
-        *   **Pros (优点):** Provides self-synchronization (due to transitions in each bit). (提供自同步（由于每个比特中的转换）。)
-        *   **Cons (缺点):** Requires twice the bandwidth of NRZ, more complex. (需要 NRZ 两倍的带宽，更复杂。)
-
-    *   **Manchester Encoding (曼彻斯特编码):**
-        *   **Description (描述):):** Each bit interval has a transition in the middle. A 0 is represented by a transition from high to low, and a 1 is represented by a transition from low to high. (每个比特间隔中间都有一个转换。0 由从高到低的转换表示，1 由从低到高的转换表示。)
-        *   **Pros (优点):** Excellent self-synchronization (a transition in the middle of every bit), no DC component. (出色的自同步能力（每个比特中间都有一个转换），无直流分量。)
-        *   **Cons (缺点):** Requires twice the bandwidth of NRZ. (需要 NRZ 两倍的带宽。)
-
-    *   **Unipolar Encoding (单极性编码):**
-        *   **Description (描述):** Uses only one polarity (e.g., positive voltage) to represent bits. Typically, a positive voltage represents a 1, and zero voltage represents a 0. (只使用一种极性（例如，正电压）来表示比特。通常，正电压表示 1，零电压表示 0。)
-        *   **Pros (优点):** Simple to implement.
-        *   **Cons (缺点):** Has a DC component, no self-synchronization (long sequences of 0s or 1s).
-
-    *   **Bipolar AMI (Alternate Mark Inversion) Encoding (双极性 AMI 编码):**
-        *   **Description (描述):** A 0 is represented by no line signal. A 1 is represented by alternating positive and negative pulses. The first 1 is represented by a positive pulse, the second by a negative, the third by a positive, and so on. (0 由无线路信号表示。1 由交替的正负脉冲表示。第一个 1 由正脉冲表示，第二个由负脉冲表示，第三个由正脉冲表示，依此类推。)
-        *   **Pros (优点):** No DC component, some self-synchronization (due to alternating 1s).
-        *   **Cons (缺点):** Long sequences of 0s can cause synchronization issues.
-
-### Self-Synchronization in Digital Signal Transmission (数字信号传输中的自同步)
-
-*   **Importance (重要性):**
-    *   **Clock Recovery (时钟恢复):** For the receiver to correctly interpret the incoming bit stream, its clock must be precisely synchronized with the sender's clock. Without synchronization, the receiver might sample the signal at the wrong time, leading to incorrect bit interpretation (e.g., reading a 0 as a 1 or vice versa). (为了让接收方正确解释传入的比特流，其时钟必须与发送方的时钟精确同步。如果不同步，接收方可能会在错误的时间采样信号，导致比特解释错误（例如，将 0 读取为 1，反之亦然）。)
-    *   **Bit Delineation (比特定界):** Synchronization helps the receiver determine the start and end of each bit interval, ensuring that each bit is read correctly. (同步有助于接收方确定每个比特间隔的开始和结束，确保每个比特都被正确读取。)
-    *   **Preventing Clock Drift (防止时钟漂移):** Over time, small differences in clock speeds between sender and receiver can lead to "clock drift." Self-synchronizing codes embed clock information within the data stream, allowing the receiver to continuously adjust its clock and prevent drift. (随着时间的推移，发送方和接收方之间时钟速度的微小差异会导致“时钟漂移”。自同步编码将时钟信息嵌入到数据流中，允许接收方不断调整其时钟并防止漂移。)
-
-*   **How it works (工作原理):** Self-synchronizing codes achieve this by ensuring there is a sufficient number of signal transitions within the data stream. Each transition allows the receiver to "resynchronize" its clock. (自同步编码通过确保数据流中有足够数量的信号转换来实现这一点。每个转换都允许接收方“重新同步”其时钟。)
-
-*   **Diagram (图示):** (Note: A diagram would typically show the signal transitions for different encoding schemes, illustrating how the receiver's clock can align with these transitions. For example, Manchester encoding has a transition in the middle of every bit, making it highly self-synchronizing.) (注意：图示通常会显示不同编码方案的信号转换，说明接收方的时钟如何与这些转换对齐。例如，曼彻斯特编码在每个比特的中间都有一个转换，使其具有高度的自同步性。)
-
-### Digital-to-Analog Conversion (Modulation) (数字到模拟转换 - 调制)
-
-*   **Purpose (目的):** To convert digital data into analog signals suitable for transmission over analog channels. (将数字数据转换为适合在模拟信道上传输的模拟信号。)
-    *  ** ASK-amplitude 1M
-      ![image](https://github.com/user-attachments/assets/58d7d711-e7b7-4097-a824-c8d9614de09c)
-
-    *  ** FSK-frequency1M
-    ![image](https://github.com/user-attachments/assets/631e7883-1d1b-4dcd-8933-e8364485166a)
-
-    *  ** PSK-Phase1M
-    ![image](https://github.com/user-attachments/assets/c7d1f02f-c9b4-4639-b10c-31a1a3f6d870)
-
-      
-*   **QAM (Quadrature Amplitude Modulation - 正交幅度调制):**
-    *   **Description (描述):** QAM 是一种结合了 ASK 和 PSK 的调制技术，通过同时改变载波的幅度和相位来表示数据。这使得每个符号可以携带更多的比特，从而提高数据传输效率。
-    *   **Constellation Diagram (星座图):**
-        *   **Definition (定义):** 星座图是一个二维散点图，用于表示数字调制方案中信号的幅度和相位。图中的每个点代表一个可能的信号单元（符号），其在水平轴上的位置表示同相分量 (I)，在垂直轴上的位置表示正交分量 (Q)。
-        *   **How to Draw (如何绘制):**
-            1.  **确定符号数量 (M):** 对于 M-QAM，有 M 个可能的符号。每个符号携带 `log₂(M)` 比特。
-            2.  **映射比特到符号 (Bit-to-Symbol Mapping):** 定义每个比特组合（例如，对于 4-QAM，00, 01, 10, 11）对应的星座点。
-            3.  **绘制坐标轴:** 绘制 I (同相) 和 Q (正交) 坐标轴。
-            4.  **绘制星座点:** 根据每个符号的幅度和相位（或 I/Q 分量）在图上绘制对应的点。
-        *   **Example (示例 - 4-QAM):**
-            *   **比特映射:**
-                *   00 -> (-1, -1)
-                *   01 -> (-1, 1)
-                *   10 -> (1, -1)
-                *   11 -> (1, 1)
-            *   **图示:** 四个点分别位于四个象限，形成一个正方形。
-        *   **Example (示例 - 8-QAM):**
-            *   **比特映射:** 8-QAM 每个符号携带 3 比特。通常有两组幅度，每组有 4 个相位。例如，内圈 4 个点，外圈 4 个点。
-            *   **图示:** 8 个点，通常排列成两个同心正方形或一个八边形。
+ **中文翻译 (Chinese Translation):**
+ “管理一个不断变化的软件系统的通用过程。配置管理的目标是支持系统集成过程，以便所有开发人员能够以一致的方式访问项目代码和文档，并找出已发生的变更。”
 
 ---
 
-## 8. Signal & Data Rate Calculations (信号与数据速率计算)
+#### 2. What are the factors that influence software change? (影响软件变更的因素有哪些?)
 
+ **From your notes (Lecture 10, Slide 6, "What Cause Changes?")**:
+ *   **New requirements:** Emerge when the software is used.
+ *   **Change of environment:** Need to adapt to the new environment.
+ *   **Errors:** Must be repaired.
+ *   **New computers and equipment:** Added to the system.
+ *   **Performance or reliability:** Require improvement.
 
-### Signal Properties (信号属性)
-
-*   **Relationship between Frequency and Period (频率与周期的关系)**
-    *   **Formula (公式):** `f = 1 / T`
-    *   **Explanation (解释):** `f` = Frequency (Hz), `T` = Period (s).
-
-### Bandwidth (带宽)
-
-*   **Bandwidth of a Channel (信道带宽)**
-    *   **Formula (公式):** `B = f_high - f_low`
-    *   **Explanation (解释):** `B` = Bandwidth (Hz), `f_high` = Highest frequency, `f_low` = Lowest frequency.
-
-### Data Rate & Channel Capacity (数据速率与信道容量)
-
-*   **Nyquist Theorem (Noiseless Channel) (奈奎斯特定理 - 无噪声信道)**
-    *   **Formula (公式):** `BitRate = 2 * B * log₂(L)`
-    *   **Explanation (解释):** `BitRate` (bps), `B` = Bandwidth (Hz), `L` = Number of signal levels.
-
-*   **Shannon's Theorem (Noisy Channel) (香农定理 - 有噪声信道)**
-    *   **Formula (公式):** `Capacity = B * log₂(1 + SNR)`
-    *   **Explanation (解释):** `Capacity` (bps), `B` = Bandwidth (Hz), `SNR` = Signal-to-Noise Ratio.
-
-*   **Signal-to-Noise Ratio (SNR) (信噪比)**
-    *   **Ratio Formula (比率公式):** `SNR = Signal Power / Noise Power`
-    *   **Decibel Formula (分贝公式):** `SNR_dB = 10 * log₁₀(SNR)`
-    *   **Conversion (转换):** `SNR = 10^(SNR_dB / 10)`
+ **中文翻译 (Chinese Translation):**
+ *   **新的需求:** 在软件使用过程中出现。
+ *   **环境的改变:** 需要适应新的环境。
+ *   **错误:** 必须被修复。
+ *   **新的计算机和设备:** 被添加到系统中。
+ *   **性能或可靠性:** 需要改进。
 
 ---
 
-## 9. Multiplexing (多路复用)
+#### 3. What is change management? (什么是变更管理?)
 
-*   **Multiplexing:** A technique to combine multiple signals into one signal over a shared medium, to make efficient use of a communication channel.
-    *   **多路复用:** 将多个信号组合成一个信号并通过共享介质传输的技术，以有效利用通信信道。
-*   **Types of Multiplexing:**
-    *   **多路复用类型:**
-        *   **FDM (Frequency-Division Multiplexing):** Divides the channel's bandwidth into separate frequency bands. Used in analog signals like radio and cable TV.
-            *   **频分多路复用 (FDM):** 将信道带宽划分为不同的频段。用于模拟信号，如收音机和有线电视。
-        *   **TDM (Time-Division Multiplexing):** Assigns a specific time slot to each signal in a round-robin fashion. Used in digital signals, like the E1/T1 telephone lines.
-            *   **时分多路复用 (TDM):** 以轮询方式为每个信号分配一个特定的时间片。用于数字信号，如 E1/T1 电话线。
-        *   **WDM (Wavelength-Division Multiplexing):** Used in fiber optics. It multiplexes multiple optical carrier signals onto a single optical fiber by using different wavelengths (colors) of laser light.
-            *   **波分多路复用 (WDM):):** 用于光纤通信。通过使用不同波长 (颜色) 的激光，将多个光载波信号复用到单根光纤上。
+ **From your notes (Lecture 12, Slide 13):**
+ "Change management is the process of keeping track of requests for changes to the software from customers and developers, working out the costs and impact of making these changes, and deciding if and when the changes should be implemented."
 
-### Multiplexing Calculations & Concepts (多路复用计算与概念)
-
-*   **Number of TV Channels (电视信道数):** In FDM, the number of TV channels that can be multiplexed depends on the total available bandwidth and the bandwidth required per TV channel. (在 FDM 中，可以复用的电视信道数量取决于总可用带宽和每个电视信道所需的带宽。)
-
-*   **TDM Frame Structure (TDM 帧结构):**
-    *   **Number of Available Data Channels (可用数据信道数):** 指的是可以被多路复用的输入源的数量。
-    *   **Number of Bits per Frame (每帧比特数):** 在 TDM 中，一帧包含来自所有输入信道的数据。如果每个信道在每帧中贡献 `n` 比特，且有 `C` 个信道，则每帧的总比特数为 `n * C`。
-    *   **Serial Data Rate (串行数据率 / 链路比特率):** 这是多路复用链路的总传输速率。它等于帧率乘以每帧的比特数。`Serial Data Rate = Frame Rate * (Bits per Frame)`。
-    *   **Frame Rate (帧率):** 每秒传输的帧数。如果每个输入信道的数据速率为 `R_in`，每个时隙的比特数为 `n_slot`，则帧率通常为 `R_in / n_slot`。
-
-*   **Example (示例 - 结合 Question 2c 模拟题):**
-    *   **Scenario:** 20 个数字源，每个 1 Mbps，使用 4 比特的时隙进行同步 TDM。
-    *   **1. Frame Rate (帧率):**
-        *   每个源每秒的比特数 = 1,000,000 bps。
-        *   每个时隙的比特数 = 4 比特。
-        *   每个源每秒需要的时隙数 = 1,000,000 / 4 = 250,000 时隙/秒。
-        *   由于是同步 TDM，帧率 = 每个源每秒需要的时隙数 = 250,000 帧/秒。
-    *   **2. Bit Rate (比特率 / 链路比特率):**
-        *   每帧的比特数 = 20 个源 * 4 比特/时隙 = 80 比特/帧。
-        *   链路比特率 = 帧率 * 每帧的比特数 = 250,000 帧/秒 * 80 比特/帧 = 20,000,000 bps = 20 Mbps。
+ **中文翻译 (Chinese Translation):**
+ “变更管理是这样一个过程：它跟踪来自客户和开发人员的软件变更请求，计算进行这些变更的成本和影响，并决定是否以及何时实施这些变更。”
 
 ---
 
----
+#### 4. Describe configuration item, baseline, release, and version. (描述配置项、基线、发布和版本)
 
-## 10. Practice Questions (练习题)
+ **Configuration Item (配置项)**
+ **From your notes (Lecture 12, Slide 7):**
+ "Software Configuration Items are the things that are created as part of the software process. [Examples include] source code, design documents, test data, user manuals."
 
-1.  **Define Wi-Fi and list four benefits.**
-    *   **定义 Wi-Fi 并列出其四个优点。**
-    *   *Answer Hint: Benefits include Convenience, Mobility, Productivity, and easy Deployment.* (答案提示：优点包括便利性、移动性、生产力、易于部署等。)
+ **中文翻译 (Chinese Translation):**
+ “软件配置项是在软件过程中创建的东西。[例子包括] 源代码、设计文档、测试数据、用户手册。”
 
-2.  **You are setting up a Wi-Fi network for a public library with a moderate number of users. Recommend a suitable IEEE 802.11 standard, explaining your choice in terms of frequency, range, and bandwidth. Identify two challenges of deploying WLAN in public spaces and suggest how to overcome them.**
-    *   **您需要为一个拥有中等用户数量的公共图书馆建立 Wi-Fi 网络。请推荐一个合适的 IEEE 802.11 标准，并从频率、范围和带宽方面解释您的选择。指出在公共场所部署 WLAN 的两个挑战，并提出克服方法。**
-    *   *Answer Hint: Recommend 802.11ax (Wi-Fi 6) for its efficiency in handling multiple devices. Challenges include security (solution: WPA3, captive portal) and interference (solution: channel planning, using 5 GHz band).* (答案提示：推荐 802.11ax (Wi-Fi 6)，因为它能高效处理多设备。挑战包括安全问题（解决方案：WPA3、强制门户认证）和干扰问题（解决方案：信道规划、使用 5 GHz 频段）。)
+ ---
+ **Baseline (基线)**
+ **From your notes (Lecture 12, Slide 8):**
+ "A baseline is a collection of component versions that make up a system. Baselines are controlled which means that versions of the components making up the system cannot be changed."
 
-3.  **A noiseless channel has a bandwidth of 3000 Hz and uses 4 signal levels. What is the maximum bit rate?**
-    *   **一个无噪声信道的带宽为 3000 Hz，使用 4 个信号电平。其最大比特率是多少？**
-    *   *Solution: Use Nyquist Theorem. BitRate = 2 * 3000 * log₂(4) = 6000 * 2 = 12,000 bps or 12 kbps.*
+ **中文翻译 (Chinese Translation):**
+ “基线是构成一个系统的组件版本的集合。基线是受控的，这意味着构成系统的组件版本不能被更改。”
 
-4.  **We need to send 265 kbps over a noisy channel with a bandwidth of 20 kHz. What is the minimum SNR (in dB) required?**
-    *   **我们需要在一个带宽为 20 kHz 的有噪声信道上传输 265 kbps 的数据。所需的最小信噪比 (dB) 是多少？**
-    *   *Solution: Use Shannon's Theorem. 265000 = 20000 * log₂(1 + SNR) -> log₂(1 + SNR) = 13.25 -> 1 + SNR = 2¹³·²⁵ -> SNR ≈ 9962. SNR_dB = 10 * log₁₀(9962) ≈ 40 dB.*
+ ---
+ **Version (版本)**
+ **From your notes (Lecture 12, Slide 10):**
+ "A version is an instance of a configuration item that differs, in some way, from other instances of that item."
 
----
+ **中文翻译 (Chinese Translation):**
+ “版本是配置项的一个实例，它在某些方面与该项的其他实例有所不同。”
 
-## 11. Analog Modulation (模拟调制)
+ ---
+ **Release (发布)**
+ **From your notes (Lecture 12, Slide 15):**
+ "A release is a version of a system that is distributed to customers."
 
-*   **Purpose (目的):** To convert digital data into analog signals for transmission over an analog channel, or to shift the frequency of an analog signal for transmission.
-    *   **目的:** 将数字数据转换为模拟信号，以便通过模拟信道传输，或改变模拟信号的频率以进行传输。
-
-### Types of Analog Modulation (模拟调制类型)
-
-*   **AM (Amplitude Modulation - 幅度调制):**
-    *   **Description (描述):** 载波信号的幅度随基带信号（消息信号）的幅度变化而变化，而载波的频率和相位保持不变。
-    *   **Bandwidth (带宽):** `B_AM = 2 * B_m` (其中 `B_m` 是消息信号的带宽)。
-    *   **Applications (应用):** 广播电台 (AM Radio)。
-
-*   **FM (Frequency Modulation - 频率调制):**
-    *   **Description (描述):** 载波信号的频率随基带信号（消息信号）的幅度变化而变化，而载波的幅度和相位保持不变。
-    *   **Bandwidth (带宽):** `B_FM = 2 * (Δf + B_m)` (Carson's Rule - 卡森法则，其中 `Δf` 是最大频率偏移，`B_m` 是消息信号的带宽)。
-    *   **Applications (应用):** 广播电台 (FM Radio)，电视伴音。
+ **中文翻译 (Chinese Translation):**
+ “发布是分发给客户的一个系统版本。”
 
 ---
 
+#### 5. Describe release management. (描述发布管理)
+
+ **From your notes (Lecture 12, Slide 16):**
+ "Release management is concerned with the process of deciding which versions of components should be included in a system release, the production and distribution of the release."
+
+ **中文翻译 (Chinese Translation):**
+ “发布管理关注的是这样一个过程：决定哪些组件版本应包含在系统发布中，以及该发布的制作和分发。”
+
+---
+
+#### 6. Describe system release. (描述系统发布)
+
+ **From your notes (Lecture 12, Slide 15):**
+ "A release is a version of a system that is distributed to customers. Releases may be:
+ *   Major releases with new functionality, minor releases that repair bugs and fix customer problems.
+ *   Releases for different platforms such as Windows, Linux, etc."
+
+ **中文翻译 (Chinese Translation):**
+ “发布是分发给客户的一个系统版本。发布可以是：
+ *   带有新功能的主要发布，以及修复错误和解决客户问题的次要发布。
+ *   针对不同平台的发布，例如 Windows、Linux 等。”
+
+---
+
+## Topic 4: Quality Management (质量管理)
+
+#### 1. What is software quality management? (什么是软件质量管理?)
+
+ **From your notes (Lecture 11, Slide 4):**
+ "Software quality management is concerned with ensuring that the required level of quality is achieved in a software product. It has three main activities:
+ *   **Quality assurance:** The definition of processes and standards that should lead to high-quality software.
+ *   **Quality planning:** The selection of appropriate processes and standards from the general quality management process.
+ *   **Quality control:** The application of processes to ensure that they have been followed and implemented."
+
+ **中文翻译 (Chinese Translation):**
+ “软件质量管理关注的是确保软件产品达到所要求的质量水平。它有三个主要活动：
+ *   **质量保证 (QA):** 定义能够产出高质量软件的过程和标准。
+ *   **质量策划 (QP):** 从通用的质量管理过程中选择适当的过程和标准。
+ *   **质量控制 (QC):** 应用过程以确保它们已被遵守和执行。”
+
+---
+
+#### 2. What are software quality attributes? (什么是软件质量属性?)
+
+ **From your notes (Lecture 11, Slide 20):**
+ These are the characteristics of software that determine its quality. The specific attributes that are important depend on the application.
+ *   Safety
+ *   Security
+ *   Reliability
+ *   Resilience
+ *   Robustness
+ *   Understandability
+ *   Testability
+ *   Adaptability
+ *   Portability
+ *   Usability
+ *   Reusability
+ *   Efficiency
+ *   Learnability
+
+ **中文翻译 (Chinese Translation):**
+ 这些是决定软件质量的特性。具体哪些属性是重要的，取决于应用程序本身。
+ *   安全性 (Safety)
+ *   信息安全 (Security)
+ *   可靠性 (Reliability)
+ *   弹性 (Resilience)
+ *   健壮性 (Robustness)
+ *   可理解性 (Understandability)
+ *   可测试性 (Testability)
+ *   适应性 (Adaptability)
+ *   可移植性 (Portability)
+ *   可用性 (Usability)
+ *   可复用性 (Reusability)
+ *   效率 (Efficiency)
+ *   易学性 (Learnability)
+
+---
+
+#### 3. What is the importance of Quality Assurance? (质量保证的重要性是什么?)
+
+ **From your notes (Lecture 11, Slide 6 and your mind map):**
+ The fundamental importance of Quality Assurance (QA) is in "providing confidence that the required quality is achieved." This confidence is critical in several areas:
+ *   **Customer Satisfaction:** QA helps a company create products and services that meet or exceed customer needs and expectations.
+ *   **Public Trust:** Consistently delivering high-quality products builds a reputation for reliability and earns public trust, which is a valuable business asset.
+ *   **Product Quality:** QA involves defining standards and processes (like coding standards and testing procedures) that proactively prevent defects, rather than just finding them later. This leads to a higher quality final product.
+
+ **中文翻译 (Chinese Translation):**
+ 质量保证 (QA) 的根本重要性在于“提供已达到所要求质量的信心”。这种信心在以下几个方面至关重要：
+ *   **客户满意度:** QA 帮助公司创造出满足甚至超越客户需求和期望的产品与服务。
+ *   **公众信任:** 持续交付高质量产品能够建立可靠的声誉，赢得公众信任，这是一项宝贵的商业资产。
+ *   **产品质量:** QA 涉及定义标准和流程（如编码标准和测试流程），从而主动地预防缺陷，而不仅仅是事后发现它们。这会带来更高质量的最终产品。
+
+---
+
+#### 4. Describe Quality Reviews. (描述质量评审)
+
+ **From your notes (Lecture 11, Slide 13):**
+ "A group of people carefully examine part or all of a software system and its associated documentation. The objective of a review is to find defects and inconsistencies in the software and its documentation. The conclusions of the review are formally recorded and passed to the author."
+
+ **中文翻译 (Chinese Translation):**
+ “一组人员仔细地检查部分或全部的软件系统及其相关文档。评审的目标是在软件及其文档中发现缺陷和不一致之处。评审的结论会被正式记录下来并递交给作者。”
+
+---
+
+#### 5. Describe ISO 9000. (描述 ISO 9000)
+
+ **From your notes (Lecture 11, Slide 10):**
+ "ISO 9000 is an international set of standards for quality management. They can be applied to a range of organisations from manufacturing to service industries. ISO 9001 is the most general of these standards and it applies to organisations that design, develop and maintain products. A supporting document (ISO 9000-3) interprets ISO 9001 for software development."
+
+ **中文翻译 (Chinese Translation):**
+ “ISO 9000 是一套关于质量管理的国际标准。它们可以应用于从制造业到服务业的各种组织。ISO 9001 是这些标准中最通用的一个，它适用于那些设计、开发和维护产品的组织。一份支持性文件 (ISO 9000-3) 对 ISO 9001 在软件开发中的应用进行了解释。”
+
+---
+
+## Topic 5: Software Maintenance (软件维护)
+
+#### 1. What is software maintenance? (什么是软件维护?)
+
+ **From your notes (Lecture 10, Slide 7):**
+ "The modification of a software product after delivery to correct faults, to improve performance or other attributes, or to adapt the product to a modified environment."
+
+ **中文翻译 (Chinese Translation):**
+ “在产品交付后对其进行的修改，以修正错误、提升性能或其他属性，或使产品适应变化了的环境。”
+
+---
+
+#### 2. What are the types of maintenance? (软件维护有哪些类型?)
+
+ **From your notes (Lecture 10, Slide 9):**
+ There are three main types of software maintenance:
+ *   **Maintenance to repair software faults:** Changing a system to correct deficiencies in the way it meets its requirements. (Often called Corrective Maintenance)
+ *   **Maintenance to adapt software to a different operating environment:** Changing a system so that it operates in a different environment (computer, OS, etc.) from its initial implementation. (Often called Adaptive Maintenance)
+ *   **Maintenance to add to or modify the system's functionality:** Modifying the system to satisfy new requirements. (Often called Perfective Maintenance)
+
+ **中文翻译 (Chinese Translation):**
+ 软件维护主要有三种类型：
+ *   **修复软件故障的维护:** 改变系统以纠正其满足需求方式中的缺陷。（通常称为纠正性维护）
+ *   **使软件适应不同操作环境的维护:** 改变系统，使其能在不同环境（计算机、操作系统等）下运行，而非其最初实现的环境。（通常称为适应性维护）
+ *   **增加或修改系统功能的维护:** 修改系统以满足新的需求。（通常称为完善性维护）
+
+#### 3. What are the costs of maintenance? (维护成本有哪些?)
+
+ **From your notes (Lecture 10, Slide 11):**
+ *   Usually greater than development costs (2* to 100* depending on the application).
+ *   Affected by both technical and non-technical factors.
+ *   Increases as software is maintained.
+ *   Maintenance corrupts the software structure so makes further maintenance more difficult.
+ *   Ageing software can have high support costs (e.g. old languages, compilers etc.).
+
+ **中文翻译 (Chinese Translation):**
+ *   通常高于开发成本（根据应用不同，可能是2到100倍）。
+ *   受技术和非技术因素影响。
+ *   随着软件的维护而增加。
+ *   维护会破坏软件结构，使后续维护更加困难。
+ *   老化的软件可能产生高昂的支持成本（例如，旧的语言、编译器等）。
+
+#### 4. What are the factors influencing maintenance costs? (影响维护成本的因素有哪些?)
+
+ **From your notes (Lecture 10, Slide 13):**
+ *   **Team stability:** Maintenance costs are reduced if the same staff are involved with them for some time.
+ *   **Contractual responsibility:** The developers of a system may have no contractual responsibility for maintenance so there is no incentive to design for future change.
+ *   **Staff skills:** Maintenance staff are often inexperienced and have limited domain knowledge.
+ *   **Program age and structure:** As programs age, their structure is degraded and they become harder to understand and change.
+
+ **中文翻译 (Chinese Translation):**
+ *   **团队稳定性:** 如果由同一批人员长期参与维护，维护成本会降低。
+ *   **合同责任:** 系统开发者可能没有维护的合同责任，因此没有动力为未来的变更进行设计。
+ *   **员工技能:** 维护人员通常经验不足，领域知识有限。
+ *   **程序年龄和结构:** 随着程序的老化，其结构会退化，变得更难理解和修改。
+
+#### 5. What is maintenance prediction? (什么是维护预测?)
+
+ **From your notes (Lecture 10, Slide 14):**
+ Maintenance prediction is concerned with:
+ *   Assessing parts of the system that may cause problems.
+ *   Assessing parts of the system that may have high maintenance costs.
+
+ **中文翻译 (Chinese Translation):**
+ 维护预测关注的是：
+ *   评估系统中可能导致问题的部分。
+ *   评估系统中可能产生高维护成本的部分。
+
+#### 6. What are the assumptions for maintenance prediction? (维护预测的假设是什么?)
+
+ **From your notes (Lecture 10, Slide 14):**
+ Prediction Assumptions:
+ *   Change acceptance depends on the maintainability of the components affected by the change.
+ *   Implementing changes degrades the system and reduces its maintainability.
+ *   Maintenance costs depend on the number of changes and costs of change depend on maintainability.
+
+ **中文翻译 (Chinese Translation):**
+ 预测假设：
+ *   变更接受度取决于受变更影响组件的可维护性。
+ *   实施变更会降低系统并降低其可维护性。
+ *   维护成本取决于变更的数量，而变更成本取决于可维护性。
+
+#### 7. What are some guidelines for maintenance prediction? (维护预测的一些指导方针是什么?)
+
+ **From your notes (Lecture 10, Slide 15):**
+ *   **Predicting maintainability:** What part of the system will be the most expensive to maintain?
+ *   **Predicting maintenance cost:** What will be the lifetime maintenance cost of this system? What will be the costs of maintaining this system over the next year?
+ *   **Predicting system changes:** What part of the system is most likely to be affected by change requests? How many change requests can be expected?
+
+ **中文翻译 (Chinese Translation):**
+ *   **预测可维护性:** 系统的哪个部分维护成本最高？
+ *   **预测维护成本:** 该系统的生命周期维护成本是多少？未来一年维护该系统的成本是多少？
+ *   **预测系统变更:** 系统的哪个部分最有可能受到变更请求的影响？预计会有多少变更请求？
+
+#### 8. How to predict the number of required changes? (如何预测所需变更的数量?)
+
+ **From your notes (Lecture 10, Slide 16):**
+ *   Understand the system and its environment.
+ *   Understand the relationships between a system and its environment.
+ *   Factors influencing this relationship are:
+     *   Number and complexity of system interfaces.
+     *   Number of inherently volatile system requirements.
+     *   The business processes where the system is used.
+ *   Tightly coupled systems require changes whenever the environment is changed.
+
+ **中文翻译 (Chinese Translation):**
+ *   理解系统及其环境。
+ *   理解系统与其环境之间的关系。
+ *   影响这种关系的因素有：
+     *   系统接口的数量和复杂性。
+     *   固有易变系统需求的数量。
+     *   系统所使用的业务流程。
+ *   紧密耦合的系统在环境发生变化时需要进行变更。
+
+#### 9. What are complexity metrics in maintenance prediction? (维护预测中的复杂性度量是什么?)
+
+ **From your notes (Lecture 10, Slide 17):**
+ *   Predictions of maintainability can be made by assessing the complexity of system components.
+ *   Studies have shown that most maintenance effort is spent on a relatively small number of system components.
+ *   Complexity depends on:
+     *   Complexity of control structures.
+     *   Complexity of data structures.
+     *   Object, method (procedure) and module size.
+
+ **中文翻译 (Chinese Translation):**
+ *   通过评估系统组件的复杂性，可以预测可维护性。
+ *   研究表明，大部分维护工作都花费在相对较少的系统组件上。
+ *   复杂性取决于：
+     *   控制结构的复杂性。
+     *   数据结构的复杂性。
+     *   对象、方法（过程）和模块的大小。
+
+#### 10. What are process metrics in maintenance prediction? (维护预测中的过程度量是什么?)
+
+ **From your notes (Lecture 10, Slide 18):**
+ Process measurements may be used to assess maintainability:
+ *   Number of requests for corrective maintenance.
+ *   Average time required for impact analysis.
+ *   Average time taken to implement a change request.
+ *   Number of outstanding change requests.
+ If any or all of these are increasing, this may indicate a decline in maintainability.
+
+ **中文翻译 (Chinese Translation):**
+ 过程度量可用于评估可维护性：
+ *   纠正性维护请求的数量。
+ *   影响分析所需的平均时间。
+ *   实施变更请求所需的平均时间。
+ *   未完成变更请求的数量。
+ 如果其中任何一项或所有项都在增加，这可能表明可维护性正在下降。
+
+#### 11. Describe evolution processes. (描述演进过程)
+
+ **From your notes (Lecture 10, Slide 19):**
+ Evolution processes depend on:
+ *   The type of software being maintained.
+ *   The development processes used.
+ *   The skills and experience of the people involved.
+ Proposals for change are the driver for system evolution.
+ Change identification and evolution are cyclic and continue throughout the system lifetime.
+
+ **中文翻译 (Chinese Translation):**
+ 演进过程取决于：
+ *   所维护软件的类型。
+ *   所使用的开发过程。
+ *   相关人员的技能和经验。
+ 变更提议是系统演进的驱动力。
+ 变更识别和演进是循环的，并在系统整个生命周期中持续进行。
+
+#### 12. Describe the system evolution process. (描述系统演进过程)
+
+ **From your notes (Lecture 10, Slide 21):**
+ The system evolution process involves:
+ 1.  **Change requests:** How much the system is affected by the changes & cost to implement the changes.
+ 2.  **Impact analysis:** All proposed changes (fault repair, adaptation and new functionality) are considered.
+ 3.  **Release planning:** Decide which changes to implement.
+ 4.  **Change implementation:** New version released. Changes proposed for the next release.
+
+ **中文翻译 (Chinese Translation):**
+ 系统演进过程包括：
+ 1.  **变更请求:** 变更对系统的影响程度以及实施变更的成本。
+ 2.  **影响分析:** 考虑所有提议的变更（故障修复、适应性变更和新功能）。
+ 3.  **发布计划:** 决定要实施哪些变更。
+ 4.  **变更实施:** 发布新版本。为下一次发布提出变更建议。
+
+#### 13. When are urgent change requests implemented? (何时实施紧急变更请求?)
+
+ **From your notes (Lecture 10, Slide 23):**
+ Urgent change requests may have to be implemented without going through all stages of the software engineering process as system problems need to be tackled urgently.
+ This happens if:
+ *   A serious system fault has to be repaired.
+ *   Changes to the system's environment (e.g. an OS upgrade) have unexpected effects.
+ *   There are business changes that require a very rapid response (e.g. the release of a competing product).
+
+ **中文翻译 (Chinese Translation):**
+ 紧急变更请求可能需要在不经过软件工程过程所有阶段的情况下实施，因为系统问题需要紧急处理。
+ 这发生在以下情况：
+ *   必须修复严重的系统故障。
+ *   系统环境的变化（例如操作系统升级）产生了意外影响。
+ *   业务变化需要非常快速的响应（例如竞争产品的发布）。
+
+#### 14. What is system re-engineering? (什么是系统再工程?)
+
+ **From your notes (Lecture 10, Slide 25):**
+ System re-engineering is:
+ *   Re-structuring or re-writing part or all of a **legacy system** without changing its functionality.
+ *   Applicable where some but not all sub-systems of a larger system require frequent maintenance.
+ *   Involves adding effort to make them easier to maintain.
+ *   The system may be re-structured and re-documented.
+
+ **中文翻译 (Chinese Translation):**
+ 系统再工程是：
+ *   在不改变其功能的情况下，重构或重写 **遗留系统** 的部分或全部。
+ *   适用于大型系统中部分而非全部子系统需要频繁维护的情况。
+ *   涉及增加工作量以使其更易于维护。
+ *   系统可以被重构和重新文档化。
+
+#### 15. What are the advantages of re-engineering? (再工程的优点是什么?)
+
+ **From your notes (Lecture 10, Slide 26):**
+ *   **Reduced risk:** There is a high risk in new software development (development problems, staffing problems and specification problems).
+ *   **Reduced cost:** The cost of re-engineering is often significantly less than the costs of developing new software.
+
+ **中文翻译 (Chinese Translation):**
+ *   **降低风险:** 新软件开发存在高风险（开发问题、人员配备问题和规范问题）。
+ *   **降低成本:** 再工程的成本通常远低于开发新软件的成本。
+
+#### 16. Describe the re-engineering process activities. (描述再工程过程活动)
+
+ **From your notes (Lecture 10, Slide 29):**
+ The re-engineering process activities include:
+ *   **Source code translation:** Convert code to a new language using a translation tool.
+ *   **Reverse engineering:** Analyze the program to understand it; information is extracted. Document its organization and function automatically.
+ *   **Program structure improvement:** Restructure for understandability (partially automated).
+ *   **Program modularization:** Reorganize the program structure; redundancy is removed (manual process).
+ *   **Data re-engineering:** Clean-up and restructure system data to reflect program changes (e.g. finding and correcting mistakes, removing duplicate records, etc.).
+
+ **中文翻译 (Chinese Translation):**
+ 再工程过程活动包括：
+ *   **源代码翻译:** 使用翻译工具将代码转换为新语言。
+ *   **逆向工程:** 分析程序以理解它；提取信息。自动记录其组织和功能。
+ *   **程序结构改进:** 重构以提高可理解性（部分自动化）。
+ *   **程序模块化:** 重组程序结构；消除冗余（手动过程）。
+ *   **数据再工程:** 清理和重构系统数据以反映程序变更（例如，查找和纠正错误，删除重复记录等）。
+
+#### 17. What are the re-engineering cost factors? (再工程的成本因素是什么?)
+
+ **From your notes (Lecture 10, Slide 31):**
+ The cost of re-engineering depends on:
+ *   The quality of the software to be reengineered.
+ *   The tool support available for reengineering.
+ *   The extent of the data conversion which is required.
+ *   The availability of expert staff for reengineering. (This can be a problem with old systems based on technology that is no longer widely used).
+
+ **中文翻译 (Chinese Translation):**
+ 再工程的成本取决于：
+ *   待再工程软件的质量。
+ *   可用于再工程的工具支持。
+ *   所需数据转换的程度。
+ *   可用于再工程的专家人员的可用性。（这对于基于不再广泛使用的技术的旧系统可能是一个问题）。
+
+#### 18. Describe legacy system evolution. (描述遗留系统演进)
+
+ **From your notes (Lecture 10, Slide 32):**
+ *   Separation between software development and software maintenance is unhelpful.
+ *   Organisations that rely on legacy systems must choose a strategy for evolving these systems:
+     *   Scrap the system completely and modify business processes so that it is no longer required.
+     *   Continue maintaining the system.
+     *   Transform the system by re-engineering to improve its maintainability.
+     *   Replace the system with a new system.
+ *   The strategy chosen should depend on the system quality and its business value.
+
+ **中文翻译 (Chinese Translation):**
+ *   软件开发和软件维护之间的分离是无益的。
+ *   依赖遗留系统的组织必须选择一个演进这些系统的策略：
+     *   完全废弃系统并修改业务流程，使其不再需要。
+     *   继续维护系统。
+     *   通过再工程改造系统以提高其可维护性。
+     *   用新系统替换现有系统。
+ *   所选择的策略应取决于系统质量和其业务价值。
+
+#### 19. Describe legacy system categories based on business value and quality. (根据业务价值和质量描述遗留系统类别)
+
+ **From your notes (Lecture 10, Slide 34):**
+ *   **Low quality, low business value:** (operation expensive, return small) - These systems should be scrapped.
+ *   **Low-quality, high-business value:** These make an important business contribution but are expensive to maintain. Should be re-engineered or replaced if a suitable system is available.
+ *   **High-quality, low-business value:** Don't contribute much to the business, expensive to maintain. Replace with commercial-off-the-shelf (COTS), scrap completely or maintain.
+ *   **High-quality, high business value:** Continue in operation using normal system maintenance.
+
+ **中文翻译 (Chinese Translation):**
+ *   **低质量、低业务价值:** (运营成本高，回报小) - 这些系统应该被废弃。
+ *   **低质量、高业务价值:** 这些系统对业务有重要贡献，但维护成本高。如果存在合适的系统，应该进行再工程或替换。
+ *   **高质量、低业务价值:** 对业务贡献不大，维护成本高。可以用现成的商业软件 (COTS) 替换，完全废弃或继续维护。
+ *   **高质量、高业务价值:** 继续使用正常系统维护。
+
+#### 20. How to assess business value and system quality? (如何评估业务价值和系统质量?)
+
+ **From your notes (Lecture 10, Slide 35, 36, 37):**
+ **Business value assessment:**
+ *   Assessment should take different viewpoints into account:
+     *   System end-users;
+     *   Business customers;
+     *   Line managers;
+     *   IT managers;
+     *   Senior managers.
+ *   Interview different stakeholders and collate results.
+
+ **System quality assessment:**
+ *   **Business process assessment:** How well does the business process support the current goals of the business?
+ *   **Environment assessment:** How effective is the system's environment and how expensive is it to maintain?
+ *   **Application assessment:** What is the quality of the application software system?
+
+ **System measurement (quantitative data for quality assessment):**
+ *   The number of system change requests;
+ *   The number of different user interfaces used by the system;
+ *   The volume of data used by the system.
+
+ **中文翻译 (Chinese Translation):**
+ **业务价值评估：**
+ *   评估应考虑不同的观点：
+     *   系统最终用户；
+     *   业务客户；
+     *   直线经理；
+     *   IT经理；
+     *   高级经理。
+ *   访谈不同的利益相关者并整理结果。
+
+ **系统质量评估：**
+ *   **业务流程评估:** 业务流程如何支持当前的业务目标？
+ *   **环境评估:** 系统环境的有效性如何，维护成本高吗？
+ *   **应用评估:** 应用软件系统的质量如何？
+
+ **系统度量（用于质量评估的定量数据）：**
+ *   系统变更请求的数量；
+ *   系统使用的不同用户界面的数量；
+ *   系统使用的数据量。
+
+---
+
+#### 3. What are the costs of maintenance? (维护成本有哪些?)
+
+ **From your notes (Lecture 10, Slide 11):**
+ *   Usually greater than development costs (2* to 100* depending on the application).
+ *   Affected by both technical and non-technical factors.
+ *   Increases as software is maintained.
+ *   Maintenance corrupts the software structure so makes further maintenance more difficult.
+ *   Ageing software can have high support costs (e.g. old languages, compilers etc.).
+
+ **中文翻译 (Chinese Translation):**
+ *   通常高于开发成本（根据应用不同，可能是2到100倍）。
+ *   受技术和非技术因素影响。
+ *   随着软件的维护而增加。
+ *   维护会破坏软件结构，使后续维护更加困难。
+ *   老化的软件可能产生高昂的支持成本（例如，旧的语言、编译器等）。
+
+#### 4. What are the factors influencing maintenance costs? (影响维护成本的因素有哪些?)
+
+ **From your notes (Lecture 10, Slide 13):**
+ *   **Team stability:** Maintenance costs are reduced if the same staff are involved with them for some time.
+ *   **Contractual responsibility:** The developers of a system may have no contractual responsibility for maintenance so there is no incentive to design for future change.
+ *   **Staff skills:** Maintenance staff are often inexperienced and have limited domain knowledge.
+ *   **Program age and structure:** As programs age, their structure is degraded and they become harder to understand and change.
+
+ **中文翻译 (Chinese Translation):**
+ *   **团队稳定性:** 如果由同一批人员长期参与维护，维护成本会降低。
+ *   **合同责任:** 系统开发者可能没有维护的合同责任，因此没有动力为未来的变更进行设计。
+ *   **员工技能:** 维护人员通常经验不足，领域知识有限。
+ *   **程序年龄和结构:** 随着程序的老化，其结构会退化，变得更难理解和修改。
+
+#### 5. What is maintenance prediction? (什么是维护预测?)
+
+ **From your notes (Lecture 10, Slide 14):**
+ Maintenance prediction is concerned with:
+ *   Assessing parts of the system that may cause problems.
+ *   Assessing parts of the system that may have high maintenance costs.
+
+ **中文翻译 (Chinese Translation):**
+ 维护预测关注的是：
+ *   评估系统中可能导致问题的部分。
+ *   评估系统中可能产生高维护成本的部分。
+
+#### 6. What are the assumptions for maintenance prediction? (维护预测的假设是什么?)
+
+ **From your notes (Lecture 10, Slide 14):**
+ Prediction Assumptions:
+ *   Change acceptance depends on the maintainability of the components affected by the change.
+ *   Implementing changes degrades the system and reduces its maintainability.
+ *   Maintenance costs depend on the number of changes and costs of change depend on maintainability.
+
+ **中文翻译 (Chinese Translation):**
+ 预测假设：
+ *   变更接受度取决于受变更影响组件的可维护性。
+ *   实施变更会降低系统并降低其可维护性。
+ *   维护成本取决于变更的数量，而变更成本取决于可维护性。
+
+#### 7. What are some guidelines for maintenance prediction? (维护预测的一些指导方针是什么?)
+
+ **From your notes (Lecture 10, Slide 15):**
+ *   **Predicting maintainability:** What part of the system will be the most expensive to maintain?
+ *   **Predicting maintenance cost:** What will be the lifetime maintenance cost of this system? What will be the costs of maintaining this system over the next year?
+ *   **Predicting system changes:** What part of the system is most likely to be affected by change requests? How many change requests can be expected?
+
+ **中文翻译 (Chinese Translation):**
+ *   **预测可维护性:** 系统的哪个部分维护成本最高？
+ *   **预测维护成本:** 该系统的生命周期维护成本是多少？未来一年维护该系统的成本是多少？
+ *   **预测系统变更:** 系统的哪个部分最有可能受到变更请求的影响？预计会有多少变更请求？
+
+#### 8. How to predict the number of required changes? (如何预测所需变更的数量?)
+
+ **From your notes (Lecture 10, Slide 16):**
+ *   Understand the system and its environment.
+ *   Understand the relationships between a system and its environment.
+ *   Factors influencing this relationship are:
+     *   Number and complexity of system interfaces.
+     *   Number of inherently volatile system requirements.
+     *   The business processes where the system is used.
+ *   Tightly coupled systems require changes whenever the environment is changed.
+
+ **中文翻译 (Chinese Translation):**
+ *   理解系统及其环境。
+ *   理解系统与其环境之间的关系。
+ *   影响这种关系的因素有：
+     *   系统接口的数量和复杂性。
+     *   固有易变系统需求的数量。
+     *   系统所使用的业务流程。
+ *   紧密耦合的系统在环境发生变化时需要进行变更。
+
+#### 9. What are complexity metrics in maintenance prediction? (维护预测中的复杂性度量是什么?)
+
+ **From your notes (Lecture 10, Slide 17):**
+ *   Predictions of maintainability can be made by assessing the complexity of system components.
+ *   Studies have shown that most maintenance effort is spent on a relatively small number of system components.
+ *   Complexity depends on:
+     *   Complexity of control structures.
+     *   Complexity of data structures.
+     *   Object, method (procedure) and module size.
+
+ **中文翻译 (Chinese Translation):**
+ *   通过评估系统组件的复杂性，可以预测可维护性。
+ *   研究表明，大部分维护工作都花费在相对较少的系统组件上。
+ *   复杂性取决于：
+     *   控制结构的复杂性。
+     *   数据结构的复杂性。
+     *   对象、方法（过程）和模块的大小。
+
+#### 10. What are process metrics in maintenance prediction? (维护预测中的过程度量是什么?)
+
+ **From your notes (Lecture 10, Slide 18):**
+ Process measurements may be used to assess maintainability:
+ *   Number of requests for corrective maintenance.
+ *   Average time required for impact analysis.
+ *   Average time taken to implement a change request.
+ *   Number of outstanding change requests.
+ If any or all of these are increasing, this may indicate a decline in maintainability.
+
+ **中文翻译 (Chinese Translation):**
+ 过程度量可用于评估可维护性：
+ *   纠正性维护请求的数量。
+ *   影响分析所需的平均时间。
+ *   实施变更请求所需的平均时间。
+ *   未完成变更请求的数量。
+ 如果其中任何一项或所有项都在增加，这可能表明可维护性正在下降。
+
+#### 11. Describe evolution processes. (描述演进过程)
+
+ **From your notes (Lecture 10, Slide 19):**
+ Evolution processes depend on:
+ *   The type of software being maintained.
+ *   The development processes used.
+ *   The skills and experience of the people involved.
+ Proposals for change are the driver for system evolution.
+ Change identification and evolution are cyclic and continue throughout the system lifetime.
+
+ **中文翻译 (Chinese Translation):**
+ 演进过程取决于：
+ *   所维护软件的类型。
+ *   所使用的开发过程。
+ *   相关人员的技能和经验。
+ 变更提议是系统演进的驱动力。
+ 变更识别和演进是循环的，并在系统整个生命周期中持续进行。
+
+#### 12. Describe the system evolution process. (描述系统演进过程)
+
+ **From your notes (Lecture 10, Slide 21):**
+ The system evolution process involves:
+ 1.  **Change requests:** How much the system is affected by the changes & cost to implement the changes.
+ 2.  **Impact analysis:** All proposed changes (fault repair, adaptation and new functionality) are considered.
+ 3.  **Release planning:** Decide which changes to implement.
+ 4.  **Change implementation:** New version released. Changes proposed for the next release.
+
+ **中文翻译 (Chinese Translation):**
+ 系统演进过程包括：
+ 1.  **变更请求:** 变更对系统的影响程度以及实施变更的成本。
+ 2.  **影响分析:** 考虑所有提议的变更（故障修复、适应性变更和新功能）。
+ 3.  **发布计划:** 决定要实施哪些变更。
+ 4.  **变更实施:** 发布新版本。为下一次发布提出变更建议。
+
+#### 13. When are urgent change requests implemented? (何时实施紧急变更请求?)
+
+ **From your notes (Lecture 10, Slide 23):**
+ Urgent change requests may have to be implemented without going through all stages of the software engineering process as system problems need to be tackled urgently.
+ This happens if:
+ *   A serious system fault has to be repaired.
+ *   Changes to the system's environment (e.g. an OS upgrade) have unexpected effects.
+ *   There are business changes that require a very rapid response (e.g. the release of a competing product).
+
+ **中文翻译 (Chinese Translation):**
+ 紧急变更请求可能需要在不经过软件工程过程所有阶段的情况下实施，因为系统问题需要紧急处理。
+ 这发生在以下情况：
+ *   必须修复严重的系统故障。
+ *   系统环境的变化（例如操作系统升级）产生了意外影响。
+ *   业务变化需要非常快速的响应（例如竞争产品的发布）。
+
+#### 14. What is system re-engineering? (什么是系统再工程?)
+
+ **From your notes (Lecture 10, Slide 25):**
+ System re-engineering is:
+ *   Re-structuring or re-writing part or all of a **legacy system** without changing its functionality.
+ *   Applicable where some but not all sub-systems of a larger system require frequent maintenance.
+ *   Involves adding effort to make them easier to maintain.
+ *   The system may be re-structured and re-documented.
+
+ **中文翻译 (Chinese Translation):**
+ 系统再工程是：
+ *   在不改变其功能的情况下，重构或重写 **遗留系统** 的部分或全部。
+ *   适用于大型系统中部分而非全部子系统需要频繁维护的情况。
+ *   涉及增加工作量以使其更易于维护。
+ *   系统可以被重构和重新文档化。
+
+#### 15. What are the advantages of re-engineering? (再工程的优点是什么?)
+
+ **From your notes (Lecture 10, Slide 26):**
+ *   **Reduced risk:** There is a high risk in new software development (development problems, staffing problems and specification problems).
+ *   **Reduced cost:** The cost of re-engineering is often significantly less than the costs of developing new software.
+
+ **中文翻译 (Chinese Translation):**
+ *   **降低风险:** 新软件开发存在高风险（开发问题、人员配备问题和规范问题）。
+ *   **降低成本:** 再工程的成本通常远低于开发新软件的成本。
+
+#### 16. Describe the re-engineering process activities. (描述再工程过程活动)
+
+ **From your notes (Lecture 10, Slide 29):**
+ The re-engineering process activities include:
+ *   **Source code translation:** Convert code to a new language using a translation tool.
+ *   **Reverse engineering:** Analyze the program to understand it; information is extracted. Document its organization and function automatically.
+ *   **Program structure improvement:** Restructure for understandability (partially automated).
+ *   **Program modularization:** Reorganize the program structure; redundancy is removed (manual process).
+ *   **Data re-engineering:** Clean-up and restructure system data to reflect program changes (e.g. finding and correcting mistakes, removing duplicate records, etc.).
+
+ **中文翻译 (Chinese Translation):**
+ 再工程过程活动包括：
+ *   **源代码翻译:** 使用翻译工具将代码转换为新语言。
+ *   **逆向工程:** 分析程序以理解它；提取信息。自动记录其组织和功能。
+ *   **程序结构改进:** 重构以提高可理解性（部分自动化）。
+ *   **程序模块化:** 重组程序结构；消除冗余（手动过程）。
+ *   **数据再工程:** 清理和重构系统数据以反映程序变更（例如，查找和纠正错误，删除重复记录等）。
+
+#### 17. What are the re-engineering cost factors? (再工程的成本因素是什么?)
+
+ **From your notes (Lecture 10, Slide 31):**
+ The cost of re-engineering depends on:
+ *   The quality of the software to be reengineered.
+ *   The tool support available for reengineering.
+ *   The extent of the data conversion which is required.
+ *   The availability of expert staff for reengineering. (This can be a problem with old systems based on technology that is no longer widely used).
+
+ **中文翻译 (Chinese Translation):**
+ 再工程的成本取决于：
+ *   待再工程软件的质量。
+ *   可用于再工程的工具支持。
+ *   所需数据转换的程度。
+ *   可用于再工程的专家人员的可用性。（这对于基于不再广泛使用的技术的旧系统可能是一个问题）。
+
+#### 18. Describe legacy system evolution. (描述遗留系统演进)
+
+ **From your notes (Lecture 10, Slide 32):**
+ *   Separation between software development and software maintenance is unhelpful.
+ *   Organisations that rely on legacy systems must choose a strategy for evolving these systems:
+     *   Scrap the system completely and modify business processes so that it is no longer required.
+     *   Continue maintaining the system.
+     *   Transform the system by re-engineering to improve its maintainability.
+     *   Replace the system with a new system.
+ *   The strategy chosen should depend on the system quality and its business value.
+
+ **中文翻译 (Chinese Translation):**
+ *   软件开发和软件维护之间的分离是无益的。
+ *   依赖遗留系统的组织必须选择一个演进这些系统的策略：
+     *   完全废弃系统并修改业务流程，使其不再需要。
+     *   继续维护系统。
+     *   通过再工程改造系统以提高其可维护性。
+     *   用新系统替换现有系统。
+ *   所选择的策略应取决于系统质量和其业务价值。
+
+#### 19. Describe legacy system categories based on business value and quality. (根据业务价值和质量描述遗留系统类别)
+
+ **From your notes (Lecture 10, Slide 34):**
+ *   **Low quality, low business value:** (operation expensive, return small) - These systems should be scrapped.
+ *   **Low-quality, high-business value:** These make an important business contribution but are expensive to maintain. Should be re-engineered or replaced if a suitable system is available.
+ *   **High-quality, low-business value:** Don't contribute much to the business, expensive to maintain. Replace with commercial-off-the-shelf (COTS), scrap completely or maintain.
+ *   **High-quality, high business value:** Continue in operation using normal system maintenance.
+
+ **中文翻译 (Chinese Translation):**
+ *   **低质量、低业务价值:** (运营成本高，回报小) - 这些系统应该被废弃。
+ *   **低质量、高业务价值:** 这些系统对业务有重要贡献，但维护成本高。如果存在合适的系统，应该进行再工程或替换。
+ *   **高质量、低业务价值:** 对业务贡献不大，维护成本高。可以用现成的商业软件 (COTS) 替换，完全废弃或继续维护。
+ *   **高质量、高业务价值:** 继续使用正常系统维护。
+
+#### 20. How to assess business value and system quality? (如何评估业务价值和系统质量?)
+
+ **From your notes (Lecture 10, Slide 35, 36, 37):**
+ **Business value assessment:**
+ *   Assessment should take different viewpoints into account:
+     *   System end-users;
+     *   Business customers;
+     *   Line managers;
+     *   IT managers;
+     *   Senior managers.
+ *   Interview different stakeholders and collate results.
+
+ **System quality assessment:**
+ *   **Business process assessment:** How well does the business process support the current goals of the business?
+ *   **Environment assessment:** How effective is the system's environment and how expensive is it to maintain?
+ *   **Application assessment:** What is the quality of the application software system?
+
+ **System measurement (quantitative data for quality assessment):**
+ *   The number of system change requests;
+ *   The number of different user interfaces used by the system;
+ *   The volume of data used by the system.
+
+ **中文翻译 (Chinese Translation):**
+ **业务价值评估：**
+ *   评估应考虑不同的观点：
+     *   系统最终用户；
+     *   业务客户；
+     *   直线经理；
+     *   IT经理；
+     *   高级经理。
+ *   访谈不同的利益相关者并整理结果。
+
+ **系统质量评估：**
+ *   **业务流程评估:** 业务流程如何支持当前的业务目标？
+ *   **环境评估:** 系统环境的有效性如何，维护成本高吗？
+ *   **应用评估:** 应用软件系统的质量如何？
+
+ **系统度量（用于质量评估的定量数据）：**
+ *   系统变更请求的数量；
+ *   系统使用的不同用户界面的数量；
+ *   系统使用的数据量。
+
+---
